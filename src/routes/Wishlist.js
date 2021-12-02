@@ -31,10 +31,12 @@ function Wishlist() {
 
   return (
     <>
-      <section className="panel text-center">
-        <div>Osoba, dla której przygotowujesz prezent, daje Ci wskazówki</div>
-        <div className="wish mt-1">{wish}</div>
-      </section>
+      {wish && (
+        <section className="panel text-center">
+          <div>Osoba, dla której przygotowujesz prezent, daje Ci wskazówki</div>
+          <div className="wish mt-1">{wish}</div>
+        </section>
+      )}
 
       <section className="panel text-center">
         <div>Poniżej możesz wpisać swoje wskazówki dla swojego Mikołaja</div>

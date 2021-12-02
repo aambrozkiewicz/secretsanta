@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "./App.css";
 import gift from "./gift.svg";
 import Santas from "./routes/Santas";
 import ThankYouPage from "./routes/ThankYouPage";
@@ -9,7 +8,7 @@ function App() {
   return (
     <Router>
       <div className="container">
-        <div className="App">
+        <div className="mt-1">
           <header className="text-center">
             <img src={gift} width="120" alt="Secret santa" />
             <div>

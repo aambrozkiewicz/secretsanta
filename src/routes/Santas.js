@@ -7,18 +7,25 @@ function Santas() {
   const navigate = useNavigate();
   const { items: santas, add, remove } = useArray();
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function postSantas() {
-    await fetch(`${API_BASE_URL}/santas`, {
-      method: "POST",
-      body: JSON.stringify({ emails: santas }),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    });
+    setLoading(true);
 
-    navigate("/thankyou");
+    try {
+      await fetch(`${API_BASE_URL}/santas`, {
+        method: "POST",
+        body: JSON.stringify({ emails: santas }),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+
+      navigate("/thankyou");
+    } finally {
+      setLoading(false);
+    }
   }
 
   function addEmail() {
@@ -58,14 +65,15 @@ function Santas() {
           ))}
         </ul>
       </section>
-      <div className="text-center">
+      <div className="flex-column-center">
         <button
           className="btn"
           onClick={postSantas}
-          disabled={santas.length === 0}
+          disabled={santas.length === 0 || loading}
         >
           Gotowe, losuj i wyślij e-maile
         </button>
+        {loading && <div className="loader mt-1"></div>}
       </div>
     </>
   );
