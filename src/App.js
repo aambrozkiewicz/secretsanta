@@ -10,7 +10,7 @@ function App() {
     <Router>
       <div className="container">
         <div className="App">
-          <header className="App-header">
+          <header className="text-center">
             <img src={gift} width="120" alt="Secret santa" />
             <div>
               <div>Ho ho ho, losowanie Św Mikołaja 👋</div>

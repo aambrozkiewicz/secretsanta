@@ -1,79 +1,7 @@
-.container {
-  height: 100vh;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
 .App {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 10px;
-}
-
-.App-header {
-  text-align: center;
-}
-
-.panel {
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 25px 0;
-  background-color: #fff;
-}
-
-.btn {
-  font-weight: 500;
-  border: 1px solid #666;
-  border-radius: 4px;
-  background: #fff;
-  transition: all 0.3s ease 0s;
-  outline: none !important;
-  padding: 6px 16px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-}
-
-.btn:active {
-  transform: translateY(4px);
-}
-
-.btn:disabled {
-  color: #777;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.flex-between-center {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  row-gap: 10px;
-}
-
-.mt-1 {
-  margin-top: 10px;
-}
-
-.mr-1 {
-  margin-right: 10px;
-}
-
-.wish {
-  font-style: italic;
-  font-size: 18px;
-}
-
-input,
-textarea {
-  padding: 7px;
-  outline: none;
-  border: 1px solid #ccc;
-  border-radius: 5px;
 }
