@@ -6,6 +6,7 @@ function Wishlist() {
   const { hash } = useParams();
   const [wish, setWish] = useState("");
   const [notes, setNotes] = useState("");
+  const [receiver, setReceiver] = useState("");
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -19,6 +20,7 @@ function Wishlist() {
       setLoading(false);
       setWish(jsonResponse.wish);
       setNotes(jsonResponse.notes);
+      setReceiver(jsonResponse.receiver);
     }
 
     data();
@@ -44,34 +46,55 @@ function Wishlist() {
     <>
       {wish && (
         <section className="panel text-center">
-          <div>Osoba, dla której przygotowujesz prezent, daje Ci wskazówki</div>
+          <div>{receiver}, daje Ci wskazówki</div>
           <div className="wish mt-1">{wish}</div>
         </section>
       )}
 
-      <section className="panel text-center">
-        <div>Poniżej możesz wpisać swoje wskazówki dla swojego Mikołaja</div>
-        <div className="mt-1">
-          <textarea
-            rows="5"
-            style={{ width: "100%" }}
-            placeholder="Marzy mi się ..."
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-          ></textarea>
-        </div>
-      </section>
-      <div className="flex-column-center">
-        <button className="btn" onClick={saveNotes} disabled={loading}>
-          Zapisz i powiadom Mikołaja
-        </button>
-        {!loading && saved && (
-          <div className="mt-1">
-            Wskazówki zostały zapisane i przekazane Mikołajowi
+      {saved && (
+        <section className="panel text-center">
+          <h2>Udało się!</h2>
+          <div>
+            Wskazówki zostały zapisane i przekazane Mikołajowi. W razie potrzeby
+            zawsze możesz tu wrócić i coś poprawić
           </div>
-        )}
-        {loading && <div className="loader mt-1"></div>}
-      </div>
+          <div className="mt-1" style={{ fontSize: "42px" }}>
+            🎅
+          </div>
+        </section>
+      )}
+
+      {!saved && (
+        <>
+          <section className="panel text-center">
+            <div>
+              Poniżej możesz wpisać swoje wskazówki dla swojego Mikołaja
+            </div>
+            <div className="mt-1">
+              <textarea
+                rows="5"
+                style={{ width: "100%" }}
+                placeholder="Marzy mi się ..."
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+              ></textarea>
+            </div>
+          </section>
+
+          <div className="flex-column-center">
+            <button className="btn" onClick={saveNotes} disabled={loading}>
+              Zapisz i powiadom Mikołaja
+            </button>
+            {!loading && saved && (
+              <div className="mt-1">
+                Gotowe! Wskazówki zostały zapisane i przekazane Mikołajowi. W
+                razie potrzeby zawsze możesz tu wrócić i coś poprawić
+              </div>
+            )}
+            {loading && <div className="loader mt-1"></div>}
+          </div>
+        </>
+      )}
     </>
   );
 }

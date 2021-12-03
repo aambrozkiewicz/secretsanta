@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 function Santas() {
   const navigate = useNavigate();
   const { items: santas, add, remove } = useArray();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -15,7 +16,7 @@ function Santas() {
     try {
       await fetch(`${API_BASE_URL}/santas`, {
         method: "POST",
-        body: JSON.stringify({ emails: santas }),
+        body: JSON.stringify({ santas }),
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -28,9 +29,13 @@ function Santas() {
     }
   }
 
-  function addEmail() {
+  function addSanta() {
     if (email.includes("@")) {
-      add(email);
+      add({
+        name,
+        email,
+      });
+      setName("");
       setEmail("");
     }
   }
@@ -38,26 +43,30 @@ function Santas() {
   return (
     <>
       <section className="panel">
-        <div className="flex-between-center">
-          Uczestnicy
-          <div>
-            <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              type="email"
-              className="mr-1"
-              placeholder="Adres e-mail"
-            />
-            <button className="btn" onClick={addEmail}>
-              Dodaj
-            </button>
-          </div>
+        <div className="form-row">
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            type="email"
+            className="mr-1"
+            placeholder="Imię"
+          />
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            className="mr-1"
+            placeholder="Adres e-mail"
+          />
+          <button className="btn" onClick={addSanta}>
+            Dodaj
+          </button>
         </div>
         <ul>
-          {santas.length === 0 && <li>Jeszcze nikogo nie ma </li>}
+          {santas.length === 0 && <li>Jeszcze nikogo nie ma</li>}
           {santas.map((member, i) => (
             <li key={i}>
-              {member} &mdash;{" "}
+              {member.name} ({member.email}) &mdash;{" "}
               <span onClick={() => remove(i)} style={{ cursor: "pointer" }}>
                 Usuń
               </span>
