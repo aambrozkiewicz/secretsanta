@@ -8,21 +8,19 @@ function App() {
   return (
     <Router>
       <div className="container">
-        <div className="mt-1">
-          <header className="text-center">
-            <img src={gift} width="120" alt="Secret santa" />
-            <div>
-              <div>Ho ho ho, losowanie Św Mikołaja 👋</div>
-              <small>Tak, to już niedługo</small>
-            </div>
-          </header>
+        <header className="text-center">
+          <img src={gift} width="120" alt="Secret santa" />
+          <div>
+            <div>Ho ho ho, losowanie Św Mikołaja 👋</div>
+            <small>Tak, to już niedługo</small>
+          </div>
+        </header>
 
-          <Routes>
-            <Route path="/" exact element={<Santas />} />
-            <Route path="/thankyou" exact element={<ThankYouPage />} />
-            <Route path="/wishlist/:hash" element={<Wishlist />} />
-          </Routes>
-        </div>
+        <Routes>
+          <Route path="/" exact element={<Santas />} />
+          <Route path="/thankyou" exact element={<ThankYouPage />} />
+          <Route path="/wishlist/:hash" element={<Wishlist />} />
+        </Routes>
       </div>
     </Router>
   );

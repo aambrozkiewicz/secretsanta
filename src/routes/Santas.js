@@ -29,7 +29,9 @@ function Santas() {
     }
   }
 
-  function addSanta() {
+  function submit(e) {
+    e.preventDefault();
+
     if (email.includes("@")) {
       add({
         name,
@@ -43,11 +45,11 @@ function Santas() {
   return (
     <>
       <section className="panel">
-        <div className="form-row">
+        <form className="form-horizontal" onSubmit={submit}>
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            type="email"
+            type="text"
             className="mr-1"
             placeholder="Imię"
           />
@@ -58,10 +60,8 @@ function Santas() {
             className="mr-1"
             placeholder="Adres e-mail"
           />
-          <button className="btn" onClick={addSanta}>
-            Dodaj
-          </button>
-        </div>
+          <button className="btn">Dodaj</button>
+        </form>
         <ul>
           {santas.length === 0 && <li>Jeszcze nikogo nie ma</li>}
           {santas.map((member, i) => (

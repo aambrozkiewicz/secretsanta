@@ -13,9 +13,8 @@ body {
 }
 
 .container {
-  height: 100vh;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 0px auto;
   padding: 10px;
 }
 
@@ -52,7 +51,7 @@ body {
   text-align: center;
 }
 
-.form-row {
+.form-horizontal {
   display: flex;
 }
 
