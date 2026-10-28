@@ -3,7 +3,14 @@ import { getExchange } from '@/lib/actions';
 import { Organizer } from '@/components/organizer';
 import { DeliveryStatus } from '@/components/delivery-status';
 import { Eyebrow, sheet } from '@/components/ui';
-import { Mail, ArrowUpRight, Sparkles, LockKeyhole, Check, Moon } from 'lucide-react';
+import {
+  Mail,
+  ArrowUpRight,
+  Sparkles,
+  LockKeyhole,
+  Check,
+  Moon,
+} from 'lucide-react';
 import Image from 'next/image';
 export const dynamic = 'force-dynamic';
 export default async function Home() {
@@ -83,13 +90,13 @@ export default async function Home() {
               </div>
             </div>
           ))}
-          <div className="mt-6 flex items-center gap-2 text-sm justify-between">
+          <div className="mt-6 flex items-center gap-2 text-sm justify-between flex-wrap sm:gap-4 sm:flex-nowrap">
             <div className="flex items-center gap-1.5">
               <Mail className="size-4 shrink-0 text-burgundy" /> Wysłane
               zaproszenia: {sent} z {exchange.mail.length}
             </div>
             <div>
-<DeliveryStatus pending={exchange.mail.length - sent} />
+              <DeliveryStatus pending={exchange.mail.length - sent} />
             </div>
           </div>
           <p className="mt-5 text-xs leading-6 text-muted">
