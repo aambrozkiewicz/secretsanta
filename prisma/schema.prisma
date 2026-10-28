@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client"
+  output = "../generated/prisma"
+}
+datasource db {
+  provider = "sqlite"
+}
+model Exchange {
+  id        String @id @default(cuid())
+  adminHash String @unique
+  createdAt DateTime @default(now())
+  people    Person[]
+  mail      Mail[]
+}
+model Person {
+  id          String @id @default(cuid())
+  exchangeId  String
+  exchange    Exchange @relation(fields: [exchangeId], references: [id], onDelete: Cascade)
+  name        String
+  email       String
+  token       String @unique
+  recipientId String? @unique
+  recipient   Person? @relation("Assignment", fields: [recipientId], references: [id])
+  santa       Person? @relation("Assignment")
+  wishes      String @default("")
+  revision    Int @default(0)
+  updatedAt   DateTime @updatedAt
+  @@unique([exchangeId, email])
+}
+model Mail {
+  id          String @id @default(cuid())
+  exchangeId  String
+  exchange    Exchange @relation(fields: [exchangeId], references: [id], onDelete: Cascade)
+  key         String @unique
+  to          String
+  subject     String
+  text        String
+  sentAt      DateTime?
+  claimedAt   DateTime?
+  createdAt   DateTime @default(now())
+  @@index([exchangeId, sentAt])
+}

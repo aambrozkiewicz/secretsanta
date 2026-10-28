@@ -1,0 +1,54 @@
+{
+  "name": "secretsanta",
+  "version": "1.0.0",
+  "description": "Secret Santa — Next.js, Tailwind CSS, Prisma i SQLite",
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "db:generate": "prisma generate",
+    "db:migrate": "node scripts/prepare-db.mjs && prisma migrate dev",
+    "db:deploy": "node scripts/prepare-db.mjs && prisma migrate deploy",
+    "test:e2e": "playwright test",
+    "format": "prettier --write ."
+  },
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@fontsource/noto-sans": "^5.3.0",
+    "@prisma/adapter-better-sqlite3": "^7.10.1",
+    "@prisma/client": "^7.10.1",
+    "dotenv": "^18.0.9",
+    "lucide-react": "^1.63.0",
+    "next": "^16.4.3",
+    "nodemailer": "^10.2.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^24.19.2",
+    "@types/nodemailer": "^8.0.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/smtp-server": "^3.5.13",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.3",
+    "prettier": "^3.9.10",
+    "prisma": "^7.10.1",
+    "smtp-server": "^3.21.1",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3"
+  },
+  "private": true,
+  "engines": {
+    "node": "24.x"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

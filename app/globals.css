@@ -1,0 +1,75 @@
+@import 'tailwindcss';
+@theme inline {
+  --font-sans: 'Noto Sans', sans-serif;
+  --color-cream: #fafafa;
+  --color-paper: #ffffff;
+  --color-ink: #292524;
+  --color-muted: #78716c;
+  --color-line: #e7e5e4;
+  --color-burgundy: #be363c;
+  --color-soft: #fceeed;
+  --color-gold: #997039;
+}
+:root {
+  color-scheme: light;
+}
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+:focus-visible {
+  outline: 2px solid var(--color-burgundy);
+  outline-offset: 4px;
+}
+textarea {
+  resize: vertical;
+}
+::selection {
+  background: #efd6d5;
+}
+
+.gift-stage {
+  background: radial-gradient(
+    ellipse at center,
+    #ffefd5 0%,
+    #fff5e8 38%,
+    transparent 70%
+  );
+}
+.gift-float {
+  animation: gift-float 6s ease-in-out infinite;
+  filter: drop-shadow(0 25px 25px #9a4b1820);
+}
+@keyframes gift-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-9deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(-4deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gift-float {
+    animation: none;
+  }
+}
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

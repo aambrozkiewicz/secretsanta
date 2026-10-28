@@ -1,0 +1,14 @@
+node_modules/
+.next/
+.env
+.env.*
+!.env.example
+*.db
+*.db-*
+generated/
+*.tsbuildinfo
+.DS_Store
+test-results/
+playwright-report/
+
+.next-e2e/
