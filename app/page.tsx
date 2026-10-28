@@ -3,7 +3,7 @@ import { getExchange } from '@/lib/actions';
 import { Organizer } from '@/components/organizer';
 import { DeliveryStatus } from '@/components/delivery-status';
 import { Eyebrow, sheet } from '@/components/ui';
-import { Check, Mail, ArrowUpRight, Sparkles, LockKeyhole } from 'lucide-react';
+import { Mail, ArrowUpRight, Sparkles, LockKeyhole, Check, Moon } from 'lucide-react';
 import Image from 'next/image';
 export const dynamic = 'force-dynamic';
 export default async function Home() {
@@ -12,13 +12,30 @@ export default async function Home() {
     const sent = exchange.mail.filter((m) => m.sentAt).length;
     return (
       <div className="mx-auto max-w-3xl py-6">
-        <Eyebrow>ŚWIĄTECZNA WYMIANA PREZENTÓW</Eyebrow>
-        <h1 className="mt-4 text-3xl font-medium leading-tight tracking-tight sm:text-4xl">
-          Sekrety są już rozdane.
-        </h1>
-        <p className="mt-4 mb-8 text-sm leading-7 text-muted">
-          Każdy otrzyma swój prywatny link. Wyniki pozostają tajemnicą.
-        </p>
+        <div className="mb-8 flex items-center justify-between gap-4 sm:gap-6">
+          <div className="min-w-0 flex-1">
+            <Eyebrow>ŚWIĄTECZNA WYMIANA PREZENTÓW</Eyebrow>
+            <h1 className="mt-4 text-3xl font-medium leading-tight tracking-tight sm:text-4xl">
+              Sekrety są już rozdane.
+            </h1>
+            <p className="mt-4 text-sm leading-7 text-muted">
+              Każdy otrzyma swój prywatny link. Wyniki pozostają tajemnicą.
+            </p>
+          </div>
+          <div
+            className="gift-stage flex size-20 shrink-0 items-center justify-center sm:size-28"
+            aria-hidden="true"
+          >
+            <Image
+              src="/gift.svg"
+              width={96}
+              height={96}
+              loading="eager"
+              alt=""
+              className="gift-float size-16 sm:size-20"
+            />
+          </div>
+        </div>
         <section className={sheet}>
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-lg font-medium">Wasza lista</h2>
@@ -29,24 +46,52 @@ export default async function Home() {
           {exchange.people.map((p) => (
             <div
               key={p.id}
-              className="flex flex-wrap items-center gap-3 border-b border-line py-3"
+              className="flex items-center gap-3 border-b border-line py-4 sm:gap-4"
             >
-              <span className="grid size-9 place-items-center rounded-full bg-soft text-burgundy">
+              <span className="hidden size-9 shrink-0 place-items-center rounded-full bg-soft text-burgundy sm:grid">
                 {p.name[0]}
               </span>
-              <span className="flex-1 text-sm">{p.name}</span>
-              <span className="break-all text-xs text-muted">{p.email}</span>
-              <Check
-                className="size-4 text-gold"
-                aria-label="Uczestnik losowania"
-              />
+              <div className="min-w-0 flex-1">
+                <p className="break-words text-sm font-medium">{p.name}</p>
+                <p className="mt-1 break-all text-xs text-muted">{p.email}</p>
+              </div>
+              <div className="flex w-36 shrink-0 flex-wrap justify-end gap-2 text-right text-[11px] leading-4 sm:w-auto sm:max-w-[60%] sm:text-xs">
+                <span
+                  className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 ${p.openedAt || p.revision > 0 ? 'bg-gold/10 text-gold' : 'bg-cream text-muted'}`}
+                >
+                  {p.openedAt || p.revision > 0 ? (
+                    <Check aria-hidden="true" className="size-3.5 shrink-0" />
+                  ) : (
+                    <Moon aria-hidden="true" className="size-3.5 shrink-0" />
+                  )}
+                  {p.openedAt || p.revision > 0
+                    ? 'Link otwarty'
+                    : 'Link jeszcze nieotwarty'}
+                </span>
+                <span
+                  className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 ${p.revision > 0 ? 'bg-gold/10 text-gold' : 'bg-cream text-muted'}`}
+                >
+                  {p.revision > 0 ? (
+                    <Check aria-hidden="true" className="size-3.5 shrink-0" />
+                  ) : (
+                    <Moon aria-hidden="true" className="size-3.5 shrink-0" />
+                  )}
+                  {p.revision > 0
+                    ? 'List zapisany'
+                    : 'List jeszcze nieuzupełniony'}
+                </span>
+              </div>
             </div>
           ))}
-          <div className="mt-6 flex items-center gap-2 text-sm">
-            <Mail className="size-4 text-burgundy" /> Wysłane wiadomości: {sent}{' '}
-            z {exchange.mail.length}
+          <div className="mt-6 flex items-center gap-2 text-sm justify-between">
+            <div className="flex items-center gap-1.5">
+              <Mail className="size-4 shrink-0 text-burgundy" /> Wysłane
+              zaproszenia: {sent} z {exchange.mail.length}
+            </div>
+            <div>
+<DeliveryStatus pending={exchange.mail.length - sent} />
+            </div>
           </div>
-          <DeliveryStatus pending={exchange.mail.length - sent} />
           <p className="mt-5 text-xs leading-6 text-muted">
             Dostęp organizatora jest zapisany w tej przeglądarce. Zachowaj jej
             pliki cookie, aby móc ponowić wysyłkę.

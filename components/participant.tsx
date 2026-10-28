@@ -1,9 +1,9 @@
 'use client';
 import { Button } from '@/components/button';
-import { useState, useTransition } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { Gift, ArrowUpRight, RefreshCw } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { saveWishes, type ActionResult } from '@/lib/actions';
+import { markLinkOpened, saveWishes, type ActionResult } from '@/lib/actions';
 import { Eyebrow, Feedback, input, sheet } from './ui';
 function LetterText({ text }: { text: string }) {
   return (
@@ -42,6 +42,10 @@ export function Participant({
   const [result, setResult] = useState<ActionResult>({});
   const [pending, startTransition] = useTransition();
   const router = useRouter();
+  useEffect(() => {
+    // Record a browser visit, rather than a server render or link preview.
+    void markLinkOpened(token).catch(() => {});
+  }, [token]);
   return (
     <>
       <Eyebrow>TWÓJ PRYWATNY ŚWIĄTECZNY KĄCIK</Eyebrow>

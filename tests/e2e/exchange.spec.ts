@@ -93,14 +93,20 @@ test('draw, invitations, private access, wishes and notification work together',
   await expect(
     page
       .getByRole('status')
-      .filter({ hasText: 'Wszystkie wiadomości' })
+      .filter({ hasText: 'Wszystkie zaproszenia' })
       .first(),
-  ).toContainText('Wszystkie wiadomości');
+  ).toContainText('Wszystkie zaproszenia');
   await page.reload();
   await expect(
     page.getByRole('heading', { name: 'Sekrety są już rozdane.' }),
   ).toBeVisible();
   const privateContext = await browser.newContext();
+  await expect(
+    page.getByText('Link jeszcze nieotwarty', { exact: true }),
+  ).toHaveCount(3);
+  await expect(
+    page.getByText('List jeszcze nieuzupełniony', { exact: true }),
+  ).toHaveCount(3);
   const participant = await privateContext.newPage();
   const ania = links.find((l) => l.to === 'ania@example.com')!;
   await participant.goto(ania.url);
@@ -120,7 +126,33 @@ test('draw, invitations, private access, wishes and notification work together',
     );
   await participant.getByRole('button', { name: 'Zapisz list' }).click();
   await expect(participant.getByRole('status')).toContainText('List zapisany');
+  await page.getByRole('button', { name: 'Odśwież status' }).click();
+  const aniaRow = page
+    .locator('section > div')
+    .filter({ has: page.getByText('ania@example.com', { exact: true }) });
+  await expect(
+    aniaRow.getByText('Link otwarty', { exact: true }),
+  ).toBeVisible();
+  await expect(
+    aniaRow.getByText('List zapisany', { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText('Link jeszcze nieotwarty', { exact: true }),
+  ).toHaveCount(2);
+  await expect(page.getByText(/Dobra książka/)).toHaveCount(0);
   await expect.poll(() => messages.length).toBe(4);
+  await page.getByRole('button', { name: 'Odśwież status' }).click();
+  await expect(page.getByText('Wysłane zaproszenia: 3 z 3')).toBeVisible();
+  await page.setViewportSize({ width: 375, height: 812 });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: 'test-results/organizer-mobile.png',
+    fullPage: true,
+  });
   expect(messages[3].to).not.toBe('ania@example.com');
   const santaLink = links.find((l) => l.to === messages[3].to)!;
   expect(messages[3].text).toContain(santaLink.url);

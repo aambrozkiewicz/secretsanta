@@ -26,10 +26,19 @@ export async function getExchange() {
     where: { adminHash: hashToken(token) },
     include: {
       people: {
-        select: { id: true, name: true, email: true },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          openedAt: true,
+          revision: true,
+        },
         orderBy: { name: 'asc' },
       },
-      mail: { select: { sentAt: true } },
+      mail: {
+        where: { key: { startsWith: 'invite:' } },
+        select: { sentAt: true },
+      },
     },
   });
 }
@@ -99,7 +108,11 @@ export async function retryMail(): Promise<ActionResult> {
   await deliverMail(exchange.id);
   revalidatePath('/');
   const pending = await db.mail.count({
-    where: { exchangeId: exchange.id, sentAt: null },
+    where: {
+      exchangeId: exchange.id,
+      sentAt: null,
+      key: { startsWith: 'invite:' },
+    },
   });
   return pending
     ? {
@@ -153,4 +166,12 @@ export async function saveWishes(
     success:
       'List zapisany. Powiadomienie dla Twojego Mikołaja czeka na wysyłkę.',
   };
+}
+
+export async function markLinkOpened(token: string): Promise<void> {
+  if (!/^[a-f0-9]{64}$/.test(token)) return;
+  await db.person.updateMany({
+    where: { token, openedAt: null, recipientId: { not: null } },
+    data: { openedAt: new Date() },
+  });
 }

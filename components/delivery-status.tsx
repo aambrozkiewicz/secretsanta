@@ -4,18 +4,19 @@ import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { retryMail, type ActionResult } from '@/lib/actions';
 import { Feedback } from './ui';
+
 export function DeliveryStatus({ pending }: { pending: number }) {
   const [busy, startTransition] = useTransition();
   const [result, setResult] = useState<ActionResult>({});
   const router = useRouter();
   return (
     <div>
-      <p className="mt-3 text-sm text-muted" role="status">
-        {pending
-          ? `${pending} wiadomości oczekuje na wysyłkę. Odśwież status za chwilę lub ponów wysyłkę.`
-          : 'Wszystkie wiadomości zostały wysłane.'}
-      </p>
-      <div className="mt-4 flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-3 items-center">
+        <p className="text-sm text-muted" role="status">
+          {pending
+            ? `Zaproszenia oczekujące na wysyłkę: ${pending}. Odśwież status za chwilę lub ponów wysyłkę.`
+            : 'Wszystkie zaproszenia zostały wysłane.'}
+        </p>
         <Button disabled={busy} onClick={() => router.refresh()}>
           Odśwież status
         </Button>

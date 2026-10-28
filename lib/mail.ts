@@ -1,6 +1,7 @@
 import 'server-only';
 import nodemailer from 'nodemailer';
 import { db } from './db';
+import { renderMailHtml } from './mail-template';
 
 export function appUrl() {
   const value = process.env.APP_URL || 'http://localhost:3000';
@@ -53,6 +54,7 @@ export async function deliverMail(exchangeId: string) {
         to: job.to,
         subject: job.subject,
         text: job.text,
+        html: renderMailHtml(job),
       });
       await db.mail.update({
         where: { id: job.id },

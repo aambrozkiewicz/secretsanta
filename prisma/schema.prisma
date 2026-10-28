@@ -23,6 +23,7 @@ model Person {
   recipient   Person? @relation("Assignment", fields: [recipientId], references: [id])
   santa       Person? @relation("Assignment")
   wishes      String @default("")
+  openedAt    DateTime?
   revision    Int @default(0)
   updatedAt   DateTime @updatedAt
   @@unique([exchangeId, email])
