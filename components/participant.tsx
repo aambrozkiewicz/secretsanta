@@ -1,13 +1,19 @@
 'use client';
 import { Button } from '@/components/button';
 import { useEffect, useState, useTransition } from 'react';
-import { Gift, ArrowUpRight, RefreshCw } from 'lucide-react';
+import {
+  Gift,
+  ArrowUpRight,
+  RefreshCw,
+  MailOpen,
+  Sparkles,
+} from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { markLinkOpened, saveWishes, type ActionResult } from '@/lib/actions';
 import { Eyebrow, Feedback, input, sheet } from './ui';
 function LetterText({ text }: { text: string }) {
   return (
-    <p className="mt-4 whitespace-pre-wrap break-words text-sm leading-7">
+    <p className="whitespace-pre-wrap break-words text-sm leading-8 sm:text-base">
       {text.split(/(https?:\/\/[^\s]+)/g).map((part, i) =>
         /^https?:\/\//.test(part) ? (
           <a
@@ -91,7 +97,25 @@ export function Participant({
               </Button>
             </div>
             {recipient.wishes ? (
-              <LetterText text={recipient.wishes} />
+              <div className="relative mt-7 rounded-xl border border-gold/20 bg-[#fffdf8] p-5 pt-7 shadow-[0_8px_30px_-12px_#99703940] sm:p-7 sm:pt-8">
+                <div
+                  className="absolute -top-4 right-5 flex size-12 rotate-6 items-center justify-center rounded-xl border-4 border-[#f7eee0] bg-burgundy text-white shadow-sm sm:right-7"
+                  aria-hidden="true"
+                >
+                  <MailOpen className="size-6" strokeWidth={1.5} />
+                </div>
+                <div className="mb-5 flex items-center gap-2 border-b border-gold/15 pb-4 pr-10 text-gold">
+                  <Sparkles className="size-3.5 shrink-0" aria-hidden="true" />
+                  <p className="break-words text-xs font-medium tracking-wide">
+                    Świąteczne marzenia · {recipient.name}
+                  </p>
+                </div>
+                <LetterText text={recipient.wishes} />
+                <div
+                  className="mt-6 h-1 rounded-full bg-[repeating-linear-gradient(135deg,#be363c_0px,#be363c_8px,transparent_8px,transparent_16px,#997039_16px,#997039_24px,transparent_24px,transparent_32px)] opacity-30"
+                  aria-hidden="true"
+                />
+              </div>
             ) : (
               <p className="mt-3 text-sm leading-6 text-muted">
                 List jeszcze do nas nie dotarł. Gdy będzie gotowy, dostaniesz
