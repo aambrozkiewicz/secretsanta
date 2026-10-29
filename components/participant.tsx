@@ -1,13 +1,7 @@
 'use client';
 import { Button } from '@/components/button';
 import { useEffect, useState, useTransition } from 'react';
-import {
-  Gift,
-  ArrowUpRight,
-  RefreshCw,
-  MailOpen,
-  Sparkles,
-} from 'lucide-react';
+import { Gift, ArrowUpRight, MailOpen, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { markLinkOpened, saveWishes, type ActionResult } from '@/lib/actions';
 import { Eyebrow, Feedback, input, sheet } from './ui';
@@ -88,14 +82,7 @@ export function Participant({
           </div>
         </div>
         {revealed && (
-          <div className="mt-5 border-t border-gold/20 pt-5">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <h3 className="text-sm font-medium">List do Mikołaja</h3>
-              <Button onClick={() => router.refresh()}>
-                <RefreshCw className="size-3" />
-                Odśwież list
-              </Button>
-            </div>
+          <div className="mt-5 border-t border-gold/20">
             {recipient.wishes ? (
               <div className="relative mt-7 rounded-xl border border-gold/20 bg-[#fffdf8] p-5 pt-7 shadow-[0_8px_30px_-12px_#99703940] sm:p-7 sm:pt-8">
                 <div
