@@ -193,10 +193,7 @@ export default async function Home() {
             </span>
           </div>
           <Organizer
-            passwordRequired={
-              Boolean(process.env.ORGANIZER_PASSWORD) ||
-              process.env.NODE_ENV === 'production'
-            }
+            passwordRequired={Boolean(process.env.ORGANIZER_PASSWORD)}
           />
           <p className="mt-6 text-center text-xs leading-6 text-muted">
             Mniej zgadywania. Więcej trafionych prezentów.

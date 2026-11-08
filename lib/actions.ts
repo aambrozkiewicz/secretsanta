@@ -48,8 +48,7 @@ export async function createExchange(
 ): Promise<ActionResult> {
   if (!validPassword(typeof password === 'string' ? password : ''))
     return {
-      error:
-        'Nieprawidłowe hasło organizatora lub brak konfiguracji hasła na serwerze.',
+      error: 'Nieprawidłowe hasło organizatora.',
     };
   const parsed = peopleSchema.safeParse(input);
   if (!parsed.success)

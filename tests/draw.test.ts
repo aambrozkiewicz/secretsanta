@@ -54,3 +54,18 @@ test('organizer password is checked without accepting a wrong value', () => {
     else process.env.ORGANIZER_PASSWORD = before;
   }
 });
+
+test('missing or empty organizer password allows creating draws in production', () => {
+  const before = { ...process.env };
+  try {
+    process.env.NODE_ENV = 'production';
+    for (const password of [undefined, '']) {
+      if (password === undefined) delete process.env.ORGANIZER_PASSWORD;
+      else process.env.ORGANIZER_PASSWORD = password;
+      assert.equal(validPassword(''), true);
+      assert.equal(validPassword('any-value'), true);
+    }
+  } finally {
+    process.env = before;
+  }
+});

@@ -18,7 +18,7 @@ Otwórz http://localhost:3000. Dodaj od 2 do 50 uczestników, potwierdź listę 
 
 ## Konfiguracja poczty
 
-W `.env` ustaw `APP_URL` (publiczny adres aplikacji), `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD` i `MAIL_FROM`. Port 465 zwykle wymaga `SMTP_SECURE=true`; port 587 używa STARTTLS (`false`). Serwer SMTP może działać bez uwierzytelnienia lokalnie. W produkcji ustaw `APP_URL=https://twoja-domena.pl` i silne `ORGANIZER_PASSWORD` — bez hasła tworzenie losowań jest zablokowane. Dane SMTP pozostają wyłącznie na serwerze.
+W `.env` ustaw `APP_URL` (publiczny adres aplikacji), `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD` i `MAIL_FROM`. Port 465 zwykle wymaga `SMTP_SECURE=true`; port 587 używa STARTTLS (`false`). Serwer SMTP może działać bez uwierzytelnienia lokalnie. W produkcji ustaw `APP_URL=https://twoja-domena.pl`. Opcjonalne `ORGANIZER_PASSWORD` zabezpiecza tworzenie losowań hasłem. Jeśli zmienna jest nieustawiona lub pusta, tworzenie list i losowań nie wymaga hasła, również w produkcji. Dane SMTP pozostają wyłącznie na serwerze.
 
 Wiadomości są wysyłane w tle po odpowiedzi serwera. Bez SMTP pozostają w bazie jako oczekujące; aplikacja nie udaje poprawnej dostawy. Na stronie organizatora przyciski „Odśwież status” i „Ponów wysyłkę” pozwalają sprawdzić i ponowić dostawę. Ponowienie nie zmienia losowania ani nie wysyła ponownie wiadomości oznaczonych jako wysłane. W razie awarii procesu między przyjęciem maila przez SMTP a zapisem statusu w bazie możliwa jest powtórna dostawa (at-least-once). SMTP potwierdza przyjęcie, a nie dostarczenie do skrzynki.
 

@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    init: true
+    env_file: .env
+    environment:
+      DATABASE_URL: file:/data/santa.db
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - santa-data:/data
+    stop_grace_period: 30s
+
+volumes:
+  santa-data:
