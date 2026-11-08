@@ -31,11 +31,11 @@ Wiadomości są wysyłane w tle po odpowiedzi serwera. Bez SMTP pozostają w baz
 - Sesja organizatora jest przechowywana w ciasteczku HttpOnly na rok. Przeglądarka pokazuje jedno zakończone losowanie; nie ma panelu wielu wydarzeń, resetowania, kont ani odzyskiwania sesji. Inne urządzenie/profil przeglądarki może stworzyć osobne wydarzenie. Utrata ciasteczka oznacza utratę dostępu do panelu, ale linki uczestników pozostają aktywne.
 - Prywatne strony nie są indeksowane, nie ładują zewnętrznych fontów ani analityki i nie przekazują adresu strony jako referrera.
 
-## Wdrożenie na VPS OVH
+## Wdrożenie przez Coolify / Docker
 
-Instrukcja dla Ubuntu/Debian, Supervisor, Nginx i HTTPS: [deploy/README.md](deploy/README.md).
+Instrukcja konfiguracji Coolify, Docker Compose i trwałego wolumenu SQLite: [deploy/README.md](deploy/README.md).
 
-Jeden proces Next.js obsługuje stronę, backend i wysyłkę. SQLite znajduje się poza katalogiem kodu w `/var/lib/secretsanta/santa.db`, więc aktualizacje aplikacji nie usuwają danych. Gotowe konfiguracje są w `deploy/`.
+Jeden kontener Next.js obsługuje stronę, backend i wysyłkę. SQLite znajduje się w `/data/santa.db`, w osobnym wolumenie montowanym do `/data`, więc wymiana kontenera nie usuwa danych. Migracje wykonują się przed startem aplikacji. Coolify obsługuje proxy i HTTPS, a Docker restartowanie procesu. Zmienne środowiskowe ustaw w Coolify; do lokalnego uruchomienia użyj `.env.example`.
 
 ## Sprawdzenie
 
